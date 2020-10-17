@@ -1,5 +1,9 @@
 <template>
-    <div class="main">main</div>
+    <div class="main">
+        <transition name="fade-transform" mode="out-in">
+            <router-view />
+        </transition>
+    </div>
 </template>
 
 <style lang="scss">
@@ -8,6 +12,6 @@
 
 <script>
 export default {
-    name: 'main'
+    name: 'Main'
 }
 </script>
