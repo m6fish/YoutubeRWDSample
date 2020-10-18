@@ -10,6 +10,8 @@ module.exports = {
         config.resolve.alias
             .set('@', resolve('src'))
             .set('@V', resolve('src/views'))
+            .set('@C', resolve('src/components'))
             .set('@CSS', resolve('css'))
+            .set('@PIC', resolve('src/assets'))
     }
 }
