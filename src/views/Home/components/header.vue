@@ -1,5 +1,7 @@
 <template>
-    <div class="header">HEADER</div>
+    <div class="header">
+        <div class="title">{{getTitle}}</div>
+    </div>
 </template>
 
 <style lang="scss">
@@ -10,6 +12,13 @@
 
 <script>
 export default {
-    name: 'Header'
+    name: 'Header',
+    computed: {
+        // 取得當前頁面的標題
+        getTitle () {
+            const { meta } = this.$route
+            return meta.title
+        }
+    }
 }
 </script>
