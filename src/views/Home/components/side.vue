@@ -36,9 +36,6 @@
 <script>
 export default {
     name: 'Side',
-    beforeMount () {
-        console.log(this.$router.options)
-    },
     computed: {
         /**
          * 取得階層菜單項目
