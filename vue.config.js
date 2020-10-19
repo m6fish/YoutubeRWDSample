@@ -10,8 +10,7 @@ module.exports = {
     configureWebpack: {
         plugins: [
             new webpack.ProvidePlugin({
-                _M: resolve('/store/modules/M_names'),
-                _A: resolve('/store/modules/A_names')
+                _M: resolve('src/store/modules/mutations')
             })
         ]
     },

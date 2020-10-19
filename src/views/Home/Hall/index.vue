@@ -13,7 +13,7 @@
 
 import videoWall from '@C/videoWall'
 import Hall from '@S/Hall'
-import { createNamespacedHelpers } from 'vuex'
+import { createNamespacedHelpers, mapActions as rootActions } from 'vuex'
 const STORE_NAME = 'Hall'
 const { mapGetters } = createNamespacedHelpers(`${STORE_NAME}/`)
 
@@ -25,6 +25,9 @@ export default {
     beforeCreate () {
         this.$root.$emit('add-store', { name: 'Hall', newStore: Hall })
     },
+    // beforeMount () {
+    //     this.SEND_AJAX(['get', 'https://api.kcg.gov.tw/api/service/Get/b4dd9c40-9027-4125-8666-06bef1756092'])
+    // },
     beforeDestroy () {
         this.$root.$emit('remove-store', STORE_NAME)
         // TODO: RESET data
@@ -32,6 +35,11 @@ export default {
     computed: {
         ...mapGetters([
             'getPage'
+        ])
+    },
+    methods: {
+        ...rootActions([
+            'SEND_AJAX'
         ])
     }
 }
