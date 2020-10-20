@@ -20,6 +20,7 @@ module.exports = {
             .set('@V', resolve('src/views'))
             .set('@C', resolve('src/components'))
             .set('@S', resolve('src/store/modules'))
+            .set('@LIB', resolve('src/libs'))
             .set('@CSS', resolve('css'))
             .set('@PIC', resolve('src/assets'))
     }
