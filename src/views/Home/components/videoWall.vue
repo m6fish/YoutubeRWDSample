@@ -1,6 +1,6 @@
 <template>
     <div class="video-wall">
-        <div v-for="(oneVideo, vidx) in getVideoArr" :key="`v${vidx}`" class="video-box">
+        <div v-for="(oneVideo, vidx) in getVideo" :key="`v${vidx}`" class="video-box">
             <div>
                 <img :src="oneVideo.pic">
                 <span class="v_length">{{oneVideo.vidoeLength}}</span>
@@ -20,19 +20,11 @@
 export default {
     name: 'VideoWall',
     computed: {
-        // TODO: 暫時顯示用, 之後會從getter拿
-        getVideoArr () {
-            return [{
-                title: 'A1',
-                pic: 'someURL/pic.png',
-                vidoeLength: '',
-                description: ''
-            }, {
-                title: 'A2',
-                pic: 'someURL/pic.png',
-                vidoeLength: '',
-                description: ''
-            }]
+        /**
+         * 取得影片列表, 等待被繼承
+         */
+        getVideo () {
+            return []
         }
     },
     methods: {

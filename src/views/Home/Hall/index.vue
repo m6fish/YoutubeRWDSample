@@ -1,6 +1,6 @@
 <template>
   <div class="hall">
-      <videoWall/>
+      <videoWall :video-arr="getVideoArr" />
       <div>{{getPage}}</div>
   </div>
 </template>
@@ -11,9 +11,9 @@
 
 <script>
 
-import videoWall from '@C/videoWall'
+import videoWall from './videoWall'
 import Hall from '@S/Hall'
-import { createNamespacedHelpers, mapActions as rootActions } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
 const STORE_NAME = 'Hall'
 const { mapGetters, mapActions } = createNamespacedHelpers(`${STORE_NAME}/`)
 
@@ -26,7 +26,6 @@ export default {
         this.$root.$emit('add-store', { name: 'Hall', newStore: Hall })
     },
     beforeMount () {
-        // this.SEND_AJAX(['get', 'https://api.kcg.gov.tw/api/service/Get/b4dd9c40-9027-4125-8666-06bef1756092'])
         this.fetchVideoList('get')
     },
     beforeDestroy () {

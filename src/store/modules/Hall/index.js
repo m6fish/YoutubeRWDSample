@@ -48,7 +48,7 @@ const actions = {
             return {
                 id,
                 title,
-                description,
+                description: description.length > 25 ? description.substr(0, 25) : description,
                 pic: medium.url || '',
                 duration: convertTime(durationOri)
             }
