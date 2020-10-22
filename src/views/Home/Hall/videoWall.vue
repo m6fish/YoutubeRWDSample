@@ -15,7 +15,7 @@ export default {
         /**
          * 取得影片列表
          */
-        getVideo () {
+        getVideos () {
             return this.getVideoArr || []
         }
     },

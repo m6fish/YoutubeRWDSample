@@ -1,7 +1,7 @@
 <template>
   <div class="hall">
-      <videoWall :video-arr="getVideoArr" />
-      <div>{{getPage}}</div>
+      <videoWall :video-arr="getAllVideo" />
+      <pageNum/>
   </div>
 </template>
 
@@ -12,6 +12,7 @@
 <script>
 
 import videoWall from './videoWall'
+import pageNum from './pageNum'
 import Hall from '@S/Hall'
 import { createNamespacedHelpers } from 'vuex'
 const STORE_NAME = 'Hall'
@@ -20,7 +21,8 @@ const { mapGetters, mapActions } = createNamespacedHelpers(`${STORE_NAME}/`)
 export default {
     name: 'Hall',
     components: {
-        videoWall
+        videoWall,
+        pageNum
     },
     beforeCreate () {
         this.$root.$emit('add-store', { name: 'Hall', newStore: Hall })
@@ -35,7 +37,7 @@ export default {
     computed: {
         ...mapGetters([
             'getPage',
-            'getVideoArr'
+            'getAllVideo'
         ])
     },
     methods: {

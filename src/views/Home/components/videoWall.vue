@@ -1,6 +1,6 @@
 <template>
     <div class="video-wall">
-        <div v-for="(oneVideo, vidx) in getVideo" :key="`v${vidx}`" class="video-box">
+        <div v-for="(oneVideo, vidx) in getVideos" :key="`v${vidx}`" class="video-box">
             <div>
                 <img :src="oneVideo.pic">
                 <span class="v_length">{{oneVideo.vidoeLength}}</span>
@@ -23,7 +23,7 @@ export default {
         /**
          * 取得影片列表, 等待被繼承
          */
-        getVideo () {
+        getVideos () {
             return []
         }
     },
