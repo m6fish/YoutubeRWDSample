@@ -58,17 +58,17 @@ const actions = {
         // 設定allVideo
         commit(_M.SET_DATA, { name: 'allVideo', data: formatData })
         // 設定頁碼&當前頁面videoArr
-        dispatch('calcVideoPage')
+        dispatch('calcPage')
     },
-    // 計算與設定總頁數, 並依當前頁面設定videoArr
-    calcVideoPage ({ commit, state }) {
+    // 計算與設定總頁數
+    calcPage ({ commit, state }) {
         // 計算&設定總頁數
         const maxPage = Math.ceil(state.allVideo.length / state.PER_PAGE)
         commit(_M.SET_DATA, { name: 'maxPage', data: maxPage })
-
-        // 依當前頁面設定videoArr
-        const video = state.allVideo.slice(state.PER_PAGE * (state.page - 1), state.PER_PAGE * state.page)
-        commit(_M.SET_DATA, { name: 'videoArr', data: video })
+    },
+    // 設定頁碼
+    setPageNum ({ commit }, payload) {
+        commit(_M.SET_DATA, { name: 'page', data: +payload })
     }
 }
 
@@ -81,7 +81,10 @@ const mutations = {
 const getters = {
     getPage: state => state.page,
     getAllVideo: state => state.allVideo, // 取得所有的影片
-    getVideoArr: state => state.videoArr, // 取得"當前顯示頁面"的影片
+    // 取得"當前顯示頁面"的影片
+    getVideoArr: state => {
+        return state.allVideo.slice(state.PER_PAGE * (state.page - 1), state.PER_PAGE * state.page)
+    },
     getNextToken: state => state.nextPageToken,
     getMaxPage: state => state.maxPage
 }
