@@ -1,0 +1,5 @@
+$fa-css-prefix: 'fa'; // class前綴
+$fa-font-path: '~@CSS/fontawesome/webfonts';
+
+@import './scss/fontawesome.scss';
+@import './scss/solid.scss';
