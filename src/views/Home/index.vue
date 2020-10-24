@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .main-right {
     height: 100vh;
     margin-left: 60px; // sidebar

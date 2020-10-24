@@ -22,7 +22,8 @@ const routes = [
             path: '/hall',
             name: 'Hall',
             meta: {
-                title: 'Hall'
+                title: 'Hall',
+                icon: 'fa-video'
             },
             component: r => require.ensure([], () => r(require('@V/Home/Hall')), 'Hall')
         }, {
@@ -30,7 +31,8 @@ const routes = [
             path: '/playing',
             name: 'Playing',
             meta: {
-                title: 'Playing'
+                title: 'Playing',
+                icon: 'fa-play-circle'
             },
             component: r => require.ensure([], () => r(require('@V/Home/Playing')), 'Playing')
         }, {
@@ -38,7 +40,8 @@ const routes = [
             path: '/favorites',
             name: 'Favorites',
             meta: {
-                title: 'Favorites'
+                title: 'Favorites',
+                icon: 'fa-heart'
             },
             component: r => require.ensure([], () => r(require('@V/Home/Favorites')), 'Favorites')
         }]
