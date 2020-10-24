@@ -1,0 +1,14 @@
+/*!
+ * Font Awesome Free 5.15.1 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */
+// https://fontawesome.com/icons?d=gallery&m=free
+
+/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
+readers do not read off random characters that represent icons */
+
+
+// 側邊選單
+.#{$fa-css-prefix}-video:before { content: fa-content($fa-var-video); } //主選單
+.#{$fa-css-prefix}-play-circle:before { content: fa-content($fa-var-play-circle); } // 播放頁
+.#{$fa-css-prefix}-heart:before { content: fa-content($fa-var-heart); } // 收藏頁
