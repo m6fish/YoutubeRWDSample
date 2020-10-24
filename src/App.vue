@@ -1,32 +1,40 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view/>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+export default {
+    name: 'app',
+    beforeMount () {
+        this.$root.$on('add-store', this.addStore)
+        this.$root.$on('remove-store', this.removeStore)
+    },
+    beforeDestroy () {
+        this.$root.$off('add-store', this.addStore)
+        this.$root.$off('remove-store', this.removeStore)
+    },
+    methods: {
+        /**
+         * 把新stroe註冊到當前列表
+         * @param {String} param.name 新store名稱
+         * @param {Object} param.newStore 新store物件
+         */
+        addStore ({ name, newStore }) {
+            if (!this.$store._modules.root.getChild(name)) {
+                this.$store.registerModule(name, newStore)
+            }
+        },
+        /**
+         * 把指定store從當前列表移除
+         * @param {String} theStroe store名稱
+         */
+        removeStore (theStroe) {
+            if (this.$store._modules.root.getChild(theStroe)) {
+                this.$store.unregisterModule(theStroe)
+            }
+        }
     }
-  }
 }
-</style>
+</script>

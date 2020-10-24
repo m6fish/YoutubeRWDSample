@@ -14,7 +14,13 @@
     "plugins": [
         "vue"
     ],
+    "globals": {
+        "_M": true,
+        "_A": true
+    },
     "rules": {
-        "indent": ["error", 4]
+        "indent": ["error", 4],
+        // vue關閉 tag close檢查
+        "vue/no-parsing-error": [2, { "x-invalid-end-tag": false }]
     }
 }
