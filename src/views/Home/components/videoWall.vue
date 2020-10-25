@@ -8,8 +8,9 @@
                 </div>
                 <div class="v_detail">
                     <div class="detail_des">{{oneVideo.description}}</div>
-                    <!-- TODO: 加入ICON -->
-                    <div class="detail_favo" @click="addFavo">收</div>
+                    <div class="detail_favo" @click="addFavo">
+                        <i class="far fa-heart"/>
+                    </div>
                 </div>
             </div>
         </div>
