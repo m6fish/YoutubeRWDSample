@@ -6,8 +6,10 @@
     </div>
 </template>
 
-<style lang="scss">
-
+<style lang="scss" scoped>
+    .main {
+        padding-top:60px;
+    }
 </style>
 
 <script>

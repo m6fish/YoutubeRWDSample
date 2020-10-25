@@ -5,10 +5,6 @@
   </div>
 </template>
 
-<style lang="scss">
-
-</style>
-
 <script>
 
 import videoWall from './videoWall'

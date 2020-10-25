@@ -12,7 +12,7 @@
 .main-right {
     height: 100vh;
     margin-left: 60px; // sidebar
-    background-color: #f5f5f5;
+    background-color: #F9F9F9;
 }
 
 </style>

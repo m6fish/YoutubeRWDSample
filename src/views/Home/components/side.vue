@@ -24,6 +24,7 @@ $itemActiveColor: #f00;
     transition: 0.5s;
     overflow: hidden;
     padding-top: 20px;
+    z-index: 3500;
 
     ul {
         position: absolute;
