@@ -3,8 +3,10 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import localforage from 'localforage'
-
 import '@CSS/main.scss'
+import { extendPrototype } from 'localforage-startswith'
+
+extendPrototype(localforage)
 
 Vue.config.productionTip = false
 
