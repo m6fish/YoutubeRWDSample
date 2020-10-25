@@ -1,15 +1,19 @@
 import { addFavo, removeFavo, fetchFavoList } from '@API/setFavo'
 
 const state = {
-    favoList: [] // 已加入收藏列表
+    favoList: [], // 已加入收藏列表
+    page: 1, // 當前頁碼
+    maxPage: 1, // 總共幾頁
+    PER_PAGE: 12 // 每頁幾筆
 }
 
 const actions = {
     // 取得當前的收藏列表
-    fetchFavorite ({ commit }, payload) {
+    fetchFavorite ({ commit, dispatch }, payload) {
         fetchFavoList().then((res) => {
             const listFromForage = Object.values(res)
             commit(_M.SET_ARRAY_DATA, { mode: 2, name: 'favoList', data: listFromForage })
+            dispatch('calcPage')
         })
     },
     /**
@@ -27,6 +31,16 @@ const actions = {
             state.commit(_M.SET_ARRAY_DATA, { mode: 0, name: 'favoList', idx: favoIDs.indexOf(vID) })
             removeFavo(state, videoData)
         }
+    },
+    // 計算與設定總頁數
+    calcPage ({ commit, state }) {
+        // 計算&設定總頁數
+        const maxPage = Math.ceil(state.favoList.length / state.PER_PAGE)
+        commit(_M.SET_DATA, { name: 'maxPage', data: maxPage })
+    },
+    // 設定頁碼
+    setPageNum ({ commit }, payload) {
+        commit(_M.SET_DATA, { name: 'page', data: +payload })
     }
 }
 
@@ -60,8 +74,14 @@ const mutations = {
 }
 
 const getters = {
-    getFavoList: state => state.favoList, // 取得原始 favolist
-    getFavoIDs: state => state.favoList.map(({ id }) => id) // 取得已加入影片ID陣列
+    getFavoListAll: state => state.favoList, // 取得原始 favolist
+    getFavoIDs: state => state.favoList.map(({ id }) => id), // 取得已加入影片ID陣列
+    // 取得"當前顯示頁面"的影片
+    getFavoList: state => {
+        return state.favoList.slice(state.PER_PAGE * (state.page - 1), state.PER_PAGE * state.page)
+    },
+    getPage: state => state.page,
+    getMaxPage: state => state.maxPage
 }
 
 export default {

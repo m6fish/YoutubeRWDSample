@@ -1,14 +1,14 @@
 <template>
   <div class="Favorites">
       <videoWall/>
-      <!-- <pageNum/> -->
+      <pageNum/>
   </div>
 </template>
 
 <script>
 
 import videoWall from './videoWall'
-// import pageNum from './pageNum'
+import pageNum from './pageNum'
 import Favo from '@S/Favorites'
 import { createNamespacedHelpers } from 'vuex'
 const STORE_NAME = 'Favo'
@@ -17,8 +17,8 @@ const { mapActions } = createNamespacedHelpers(`${STORE_NAME}/`)
 export default {
     name: 'Favorites',
     components: {
-        videoWall
-        // pageNum
+        videoWall,
+        pageNum
     },
     beforeCreate () {
         const storeArr = [{ name: 'Favo', newStore: Favo }]
