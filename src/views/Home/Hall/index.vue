@@ -13,7 +13,7 @@ import Hall from '@S/Hall'
 import Favo from '@S/Favorites'
 import { createNamespacedHelpers } from 'vuex'
 const STORE_NAME = 'Hall'
-const { mapGetters, mapActions } = createNamespacedHelpers(`${STORE_NAME}/`)
+const { mapActions } = createNamespacedHelpers(`${STORE_NAME}/`)
 const { mapActions: favoActions } = createNamespacedHelpers('Favo/')
 
 export default {
@@ -36,12 +36,6 @@ export default {
     beforeDestroy () {
         this.$root.$emit('remove-store', [STORE_NAME])
         // TODO: RESET data
-    },
-    computed: {
-        ...mapGetters([
-            'getPage',
-            'getAllVideo'
-        ])
     },
     methods: {
         ...mapActions([

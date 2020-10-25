@@ -3,7 +3,6 @@ import { convertTime } from '@LIB/utils'
 
 const state = {
     allVideo: [], // 所有的影片清單
-    videoArr: [], // 當前顯示頁面的清單
     page: 1, // 當前頁碼
     maxPage: 1, // 總共幾頁
     PER_PAGE: 12, // 每頁幾筆
