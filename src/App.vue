@@ -18,22 +18,27 @@ export default {
     methods: {
         /**
          * 把新stroe註冊到當前列表
-         * @param {String} param.name 新store名稱
-         * @param {Object} param.newStore 新store物件
+         * @param {Array} storeArr 要註冊的store資料array, e.g. [{name, newStore}]
+         * @param {String} storeArr[index].name 新store名稱
+         * @param {Object} storeArr[index].newStore 新store物件
          */
-        addStore ({ name, newStore }) {
-            if (!this.$store._modules.root.getChild(name)) {
-                this.$store.registerModule(name, newStore)
-            }
+        addStore (storeArr) {
+            storeArr.forEach(({ name, newStore }) => {
+                if (!this.$store._modules.root.getChild(name)) {
+                    this.$store.registerModule(name, newStore)
+                }
+            })
         },
         /**
          * 把指定store從當前列表移除
-         * @param {String} theStroe store名稱
+         * @param {Array} storeArr 要刪除的store名稱array, e.g. [name]
          */
-        removeStore (theStroe) {
-            if (this.$store._modules.root.getChild(theStroe)) {
-                this.$store.unregisterModule(theStroe)
-            }
+        removeStore (storeArr) {
+            storeArr.forEach((name) => {
+                if (this.$store._modules.root.getChild(name)) {
+                    this.$store.unregisterModule(name)
+                }
+            })
         }
     }
 }
