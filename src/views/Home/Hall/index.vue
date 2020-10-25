@@ -1,6 +1,6 @@
 <template>
   <div class="hall">
-      <videoWall :video-arr="getAllVideo" />
+      <videoWall/>
       <pageNum/>
   </div>
 </template>
@@ -10,9 +10,11 @@
 import videoWall from './videoWall'
 import pageNum from './pageNum'
 import Hall from '@S/Hall'
+import Favo from '@S/Favorites'
 import { createNamespacedHelpers } from 'vuex'
 const STORE_NAME = 'Hall'
 const { mapGetters, mapActions } = createNamespacedHelpers(`${STORE_NAME}/`)
+const { mapActions: favoActions } = createNamespacedHelpers('Favo/')
 
 export default {
     name: 'Hall',
@@ -21,13 +23,18 @@ export default {
         pageNum
     },
     beforeCreate () {
-        this.$root.$emit('add-store', { name: 'Hall', newStore: Hall })
+        const storeArr = [
+            { name: 'Hall', newStore: Hall },
+            { name: 'Favo', newStore: Favo }
+        ]
+        this.$root.$emit('add-store', storeArr)
     },
     beforeMount () {
         this.fetchVideoList('get')
+        this.fetchFavorite()
     },
     beforeDestroy () {
-        this.$root.$emit('remove-store', STORE_NAME)
+        this.$root.$emit('remove-store', [STORE_NAME])
         // TODO: RESET data
     },
     computed: {
@@ -39,6 +46,9 @@ export default {
     methods: {
         ...mapActions([
             'fetchVideoList'
+        ]),
+        ...favoActions([
+            'fetchFavorite'
         ])
     }
 }

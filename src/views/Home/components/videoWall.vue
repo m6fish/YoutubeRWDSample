@@ -6,7 +6,7 @@
                     <img :src="oneVideo.pic">
                     <span class="pic_duration">{{oneVideo.duration}}</span>
                 </div>
-                <div class="v_detail"  @click.stop="addFavo(oneVideo.id)">
+                <div class="v_detail" :class="{active: isActive(oneVideo.id)}"  @click.stop="setFavo(oneVideo)">
                     <div class="detail_des">{{oneVideo.description}}</div>
                     <div class="detail_favo">
                         <i class="far fa-heart"/>
@@ -79,10 +79,11 @@ $hoverColor: red;
             color:#CCC;
         }
 
-        &:hover {
+        &:hover, &.active {
             .detail_des, .detail_favo {
                 color: $hoverColor;
                 cursor: pointer;
+                transition: 0.2s;
             }
         }
     }
@@ -95,22 +96,30 @@ export default {
     name: 'VideoWall',
     computed: {
         /**
-         * 取得影片列表, 等待被繼承
+         * [等待繼承] 取得影片列表
          */
         getVideos () {
             return []
         }
+
     },
     methods: {
-        addFavo (vID) {
-            console.log('add favorite', vID)
+        /**
+         * [等待繼承] 加入蒐藏
+         */
+        setFavo (videoData) {},
+        /**
+         * [等待繼承] 是否已被收藏
+         * @returns {Boolean} {true: YES, false: NO}
+         */
+        isActive (vID) {
+            return false
         },
         /**
          * 前往播放頁
          * @param {String} vID video id
          */
         goPlaying (vID) {
-            console.log(vID)
             this.$router.push({ name: 'Playing', params: { id: vID } })
         }
     }

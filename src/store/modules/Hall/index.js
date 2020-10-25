@@ -55,9 +55,8 @@ const actions = {
                 duration: convertTime(durationOri)
             }
         })
-        // 設定allVideo
+        // 設定allVideo & 頁碼
         commit(_M.SET_DATA, { name: 'allVideo', data: formatData })
-        // 設定頁碼&當前頁面videoArr
         dispatch('calcPage')
     },
     // 計算與設定總頁數
