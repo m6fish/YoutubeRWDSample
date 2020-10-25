@@ -6,9 +6,9 @@
                     <img :src="oneVideo.pic">
                     <span class="pic_duration">{{oneVideo.duration}}</span>
                 </div>
-                <div class="v_detail">
+                <div class="v_detail"  @click.stop="addFavo(oneVideo.id)">
                     <div class="detail_des">{{oneVideo.description}}</div>
-                    <div class="detail_favo" @click="addFavo">
+                    <div class="detail_favo">
                         <i class="far fa-heart"/>
                     </div>
                 </div>
@@ -18,6 +18,8 @@
 </template>
 
 <style lang="scss" scoped>
+$hoverColor: red;
+
 .video-wall {
     text-align: center;
     padding: 0 10%;
@@ -34,6 +36,7 @@
 
     .v_pic {
         position: relative;
+        cursor: pointer;
         .pic_duration {
             background: rgba(0,0,0,0.8);
             color: #FFF;
@@ -46,6 +49,12 @@
             margin:4px;
             font-size: 1rem;
             line-height: 1rem;
+        }
+
+        &:hover{
+            .pic_duration {
+                color: $hoverColor;
+            }
         }
     }
 
@@ -67,6 +76,14 @@
         .detail_favo {
             float: right;
             margin-right: 10px;
+            color:#CCC;
+        }
+
+        &:hover {
+            .detail_des, .detail_favo {
+                color: $hoverColor;
+                cursor: pointer;
+            }
         }
     }
 
@@ -85,8 +102,8 @@ export default {
         }
     },
     methods: {
-        addFavo (videoId) {
-            console.log('add favorite')
+        addFavo (vID) {
+            console.log('add favorite', vID)
         },
         /**
          * 前往播放頁
