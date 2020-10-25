@@ -1,5 +1,5 @@
 <script>
-import videoWallClass from '../components/videoWall'
+import videoWallOri from '../components/videoWall'
 import { createNamespacedHelpers } from 'vuex'
 const STORE_NAME = 'Hall'
 const { mapGetters } = createNamespacedHelpers(`${STORE_NAME}/`)
@@ -7,7 +7,7 @@ const { mapGetters: favoGetters, mapActions: favoActions } = createNamespacedHel
 
 export default {
     name: 'VideoWall',
-    extends: videoWallClass,
+    extends: videoWallOri,
     computed: {
         ...mapGetters([
             'getPage',
