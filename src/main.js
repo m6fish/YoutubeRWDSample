@@ -6,6 +6,12 @@ import localforage from 'localforage'
 import '@CSS/main.scss'
 import { extendPrototype } from 'localforage-startswith'
 
+// video.js
+import Video from 'video.js'
+import 'video.js/dist/video-js.css'
+
+Vue.prototype.$video = Video
+
 extendPrototype(localforage)
 
 Vue.config.productionTip = false
