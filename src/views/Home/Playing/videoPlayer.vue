@@ -1,6 +1,8 @@
 <template>
     <div class="video">
-        <video ref="videoPlayer" class="video-js"/>
+        <video ref="videoPlayer"
+            class="video-js vjs-big-play-centered"
+        />
     </div>
 </template>
 
