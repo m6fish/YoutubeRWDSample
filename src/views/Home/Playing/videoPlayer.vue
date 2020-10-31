@@ -1,5 +1,5 @@
 <template>
-    <div class="video">
+    <div class="videoPlayer">
         <video ref="videoPlayer"
             class="video-js vjs-big-play-centered"
         />
@@ -8,7 +8,7 @@
 
 <script>
 export default {
-    name: 'video',
+    name: 'videoPlayer',
     props: {
         options: {
             type: Object,
