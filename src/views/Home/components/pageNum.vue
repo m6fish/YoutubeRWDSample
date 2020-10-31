@@ -55,7 +55,8 @@ export default {
     data () {
         return {
             NUM_PER_PAGE: 5, // 頁面上至多放幾個數字頁碼
-            centerPage: 3 // 中央頁碼
+            centerPage: 3, // 中央頁碼
+            currentPageArr: [] // 當前的頁碼陣列
         }
     },
     computed: {
@@ -67,24 +68,30 @@ export default {
             // 頁碼初始化, 檢查最大頁數是否不足
             if (this.getPage === 1 || this.getMaxPage <= this.NUM_PER_PAGE) {
                 const pages = this.getMaxPage > this.NUM_PER_PAGE ? this.NUM_PER_PAGE : this.getMaxPage
-                return [...Array(pages)].map((v, idx) => idx + 1)
+                const newArr = [...Array(pages)].map((v, idx) => idx + 1)
+                this.currentPageArr = newArr
+                return newArr
             }
 
             const shift = this.getPage - this.centerPage
-            const oldArr = this.getPageArr.slice(0)
+            const oldArr = this.currentPageArr.slice(0)
+            let newArr = oldArr.slice(0)
             if (shift > 0) {
-                // 往前
-                if (![1, 2].includes(this.getPage)) {
-                    return oldArr.map(old => old + shift)
-                }
-            } else if (shift < 0) {
                 // 往後
-                if (![this.getMaxPage - 1, this.getMaxPage - 2].includes(this.getPage)) {
-                    return oldArr.map(old => old + shift)
-                }
+                const newLastPage = oldArr[this.NUM_PER_PAGE - 1] + shift
+                newArr = newLastPage > this.getMaxPage ? oldArr : oldArr.map(old => old + shift)
+                // set new centerPage
+                this.centerPage += shift
+            } else if (shift < 0) {
+                // 往前
+                const newFirstPage = oldArr[0] + shift
+                newArr = newFirstPage < 1 ? oldArr : oldArr.map(old => old + shift)
+                // set new centerPage
+                this.centerPage += shift
             }
 
-            return oldArr
+            this.currentPageArr = newArr
+            return newArr
         }
     },
     methods: {

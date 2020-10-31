@@ -58,6 +58,61 @@ const actions = {
         commit(_M.SET_DATA, { name: 'allVideo', data: formatData })
         dispatch('calcPage')
     },
+    // 取得下一批資料
+    async fetchNextVideo ({ state, commit, dispatch }, payload) {
+        // already no next page!
+        if (!state.nextPageToken) {
+            console.warn('Already no next page!')
+            return false
+        }
+
+        const VIDEO_KEY = process.env.VUE_APP_VIDEO_KEY
+        const url = 'https://www.googleapis.com/youtube/v3/videos'
+        const data = {
+            params: {
+                part: 'snippet,contentDetails',
+                key: VIDEO_KEY,
+                chart: 'mostPopular',
+                hl: 'zh-TW',
+                regionCode: 'TW',
+                maxResults: 50,
+                pageToken: state.nextPageToken
+            }
+        }
+
+        const res = await Axios.get(url, data).catch(err => { console.warn('ERR!', err) })
+        const { status: returnState, data: returnData } = res || {}
+
+        if (+returnState !== 200) {
+            return false
+        }
+
+        const { nextPageToken, items } = returnData
+
+        // 紀錄token
+        commit(_M.SET_DATA, { name: 'nextPageToken', data: nextPageToken || '' })
+
+        // 格式化資料&紀錄
+        const formatData = items.map(({ id = '', contentDetails, snippet }) => {
+            // 取得本地語言標題
+            const { description = '', title = '' } = snippet.localized
+            // 取得圖片
+            const { medium } = snippet.thumbnails
+            // 取得影片時間
+            const { duration: durationOri } = contentDetails
+            return {
+                id,
+                title,
+                description: description.length > 25 ? description.substr(0, 25) : description,
+                pic: medium.url || '',
+                duration: convertTime(durationOri)
+            }
+        })
+
+        // 設定allVideo & 頁碼
+        commit(_M.SET_DATA, { name: 'allVideo', data: [...state.allVideo, ...formatData] })
+        dispatch('calcPage')
+    },
     // 計算與設定總頁數
     calcPage ({ commit, state }) {
         // 計算&設定總頁數

@@ -15,8 +15,17 @@ export default {
     },
     methods: {
         ...mapActions([
-            'setPageNum'
-        ])
+            'setPageNum',
+            'fetchNextVideo'
+        ]),
+        goSpec (thePage) {
+            this.setPageNum(+thePage)
+
+            // 到底線前一筆時,向後要新資料
+            if (thePage === this.getMaxPage - 1) {
+                this.fetchNextVideo()
+            }
+        }
     }
 }
 </script>
