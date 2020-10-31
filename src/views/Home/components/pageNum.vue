@@ -3,7 +3,10 @@
         <ul class="group">
             <li @click="goFirst">1</li>
             <li @click="goPrev">{{'<<'}}</li>
-            <li @click="goSpec(num)" v-for="num in getPageArr" :key="`p${num}`">
+            <li @click="goSpec(num)"
+                v-for="num in getPageArr"
+                :key="`p${num}`"
+                :class="{active: num === getPage }">
                 {{num}}
             </li>
             <!-- TODO:加入disable邏輯&樣式 -->
@@ -35,7 +38,7 @@ $hoverColor: #616161;
                 margin-left: 10px;
             }
         }
-        li:hover {
+        li:hover, .active {
             border-color: $hoverColor;
             background-color: $hoverColor;
             color: #EEE;
