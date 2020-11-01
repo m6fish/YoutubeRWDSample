@@ -120,7 +120,7 @@ export default {
          * @param {String} vID video id
          */
         goPlaying (vID) {
-            this.$router.push({ name: 'Playing', params: { id: vID } })
+            this.$router.push({ name: 'Playing', query: { id: vID } })
         }
     }
 }

@@ -2,7 +2,7 @@
     <div class="side">
         <ul class="routes" v-for="(group, gID) in getMenu" :key="`G-${gID}`">
             <li class="r_item" v-for="(oneMenu, mID) in group.children" :key="mID">
-                <router-link :to="oneMenu.name">
+                <router-link :to="oneMenu.name" :class="{active: getRouteName === oneMenu.name}">
                     <i :class="`fas ${oneMenu.icon}`"></i>
                     <span>{{oneMenu.title}}</span>
                 </router-link>
@@ -57,7 +57,7 @@ $itemActiveColor: #f00;
                 color:$itemActiveColor;
             }
 
-            .router-link-active {
+            .active {
                 color: $itemActiveColor;
             }
 
