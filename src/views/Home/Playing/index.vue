@@ -1,8 +1,7 @@
 <template>
   <div class="playing">
-      <video-player :options="videoOptions"/>
-      <div class="title">{{getVideoMeta.title}}</div>
-      <div class="des">{{getVideoMeta.description}}</div>
+        <video-player :options="videoOptions"/>
+        <description />
   </div>
 </template>
 
@@ -12,17 +11,16 @@
 
 <script>
 import videoPlayer from './videoPlayer'
+import description from './description'
 import Favo from '@S/Favorites'
 import Play from '@S/Playing'
-import { createNamespacedHelpers, mapGetters as rootGetters } from 'vuex'
 const STORE_NAME = 'Play'
-// const { mapActions } = createNamespacedHelpers(`${STORE_NAME}/`)
-const { mapGetters: favoGetters } = createNamespacedHelpers('Favo/')
 
 export default {
     name: 'Playing',
     components: {
-        videoPlayer
+        videoPlayer,
+        description
     },
     data () {
         return {
@@ -45,43 +43,8 @@ export default {
         ]
         this.$root.$emit('add-store', storeArr)
     },
-    beforeMount () {
-        this.fetchFavorite()
-    },
     beforeDestroy () {
         this.$root.$emit('remove-store', [STORE_NAME])
-    },
-    computed: {
-        ...rootGetters([
-            'getUserPlay'
-        ]),
-        ...favoGetters([
-            'getFavoListAll'
-        ]),
-        getVideoMeta () {
-            const { id, title, description } = this.getUserPlay
-            const fromFavo = this.getFavoListAll[0]
-
-            if (id) {
-                return {
-                    title,
-                    description
-                }
-            } else if (fromFavo) {
-                // 無ID, 直接取收藏頁第一筆撥放
-                return {
-                    title: fromFavo.title,
-                    description: fromFavo.description
-                }
-            }
-            // 資料不存在,回大廳
-            alert('The video has not found!')
-            this.$router.replace({ name: 'Hall' })
-            return {
-                title: '',
-                description: ''
-            }
-        }
     }
 }
 </script>
