@@ -7,6 +7,7 @@
                     <span class="pic_duration">{{oneVideo.duration}}</span>
                 </div>
                 <div class="v_detail" :class="{active: isActive(oneVideo.id)}"  @click.stop="setFavo(oneVideo)">
+                    <div class="detail_des">{{oneVideo.title}}</div>
                     <div class="detail_des">{{oneVideo.description}}</div>
                     <div class="detail_favo">
                         <i class="far fa-heart"/>
@@ -60,22 +61,20 @@ $hoverColor: red;
 
     .v_detail {
         width: 320px;
-        margin: 0 auto;
 
         .detail_des {
-            width: 80%;
+            width: 95%;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
             margin: 0;
             display: inline-block;
-            font-size: 1.3rem;
+            font-size: 1rem;
             font-weight: 500;
             color: #030303;
         }
         .detail_favo {
             float: right;
-            margin-right: 10px;
             color:#CCC;
         }
 

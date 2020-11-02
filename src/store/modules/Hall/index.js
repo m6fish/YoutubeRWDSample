@@ -39,6 +39,7 @@ const actions = {
         commit(_M.SET_DATA, { name: 'nextPageToken', data: nextPageToken })
 
         // 格式化資料&紀錄
+        const STR_LESS = 40
         const formatData = items.map(({ id = '', contentDetails, snippet }) => {
             // 取得本地語言標題
             const { description = '', title = '' } = snippet.localized
@@ -48,8 +49,8 @@ const actions = {
             const { duration: durationOri } = contentDetails
             return {
                 id,
-                title,
-                description: description.length > 25 ? description.substr(0, 25) : description,
+                title: title.length > STR_LESS ? title.substr(0, STR_LESS) : title,
+                description: description.length > STR_LESS ? description.substr(0, STR_LESS) : description,
                 pic: medium.url || '',
                 duration: convertTime(durationOri)
             }
@@ -93,6 +94,7 @@ const actions = {
         commit(_M.SET_DATA, { name: 'nextPageToken', data: nextPageToken || '' })
 
         // 格式化資料&紀錄
+        const STR_LESS = 40
         const formatData = items.map(({ id = '', contentDetails, snippet }) => {
             // 取得本地語言標題
             const { description = '', title = '' } = snippet.localized
@@ -102,8 +104,8 @@ const actions = {
             const { duration: durationOri } = contentDetails
             return {
                 id,
-                title,
-                description: description.length > 25 ? description.substr(0, 25) : description,
+                title: title.length > STR_LESS ? title.substr(0, STR_LESS) : title,
+                description: description.length > STR_LESS ? description.substr(0, STR_LESS) : description,
                 pic: medium.url || '',
                 duration: convertTime(durationOri)
             }
