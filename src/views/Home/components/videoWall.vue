@@ -1,6 +1,6 @@
 <template>
     <div class="video-wall">
-        <div v-for="(oneVideo, vidx) in getVideos" :key="`v${vidx}`" class="video-box" @click="goPlaying(oneVideo.id)">
+        <div v-for="(oneVideo, vidx) in getVideos" :key="`v${vidx}`" class="video-box" @click="goPlaying(oneVideo)">
             <div>
                 <div class="v_pic">
                     <img :src="oneVideo.pic">
@@ -92,6 +92,8 @@ $hoverColor: red;
 </style>
 
 <script>
+import { mapActions as rootActions } from 'vuex'
+
 export default {
     name: 'VideoWall',
     computed: {
@@ -104,6 +106,9 @@ export default {
 
     },
     methods: {
+        ...rootActions([
+            'SET_USER_PLAY'
+        ]),
         /**
          * [等待繼承] 加入蒐藏
          */
@@ -117,10 +122,11 @@ export default {
         },
         /**
          * 前往播放頁
-         * @param {String} vID video id
+         * @param {Object} videoData the video
          */
-        goPlaying (vID) {
-            this.$router.push({ name: 'Playing', query: { id: vID } })
+        goPlaying (videoData) {
+            this.SET_USER_PLAY(videoData)
+            this.$router.push({ name: 'Playing', query: { id: videoData.id } })
         }
     }
 }

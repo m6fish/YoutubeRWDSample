@@ -1,7 +1,7 @@
 <template>
   <div class="playing">
-      <div class="title">{{getVideoMeta.title}}</div>
       <video-player :options="videoOptions"/>
+      <div class="title">{{getVideoMeta.title}}</div>
       <div class="des">{{getVideoMeta.description}}</div>
   </div>
 </template>
@@ -14,9 +14,10 @@
 import videoPlayer from './videoPlayer'
 import Favo from '@S/Favorites'
 import Play from '@S/Playing'
-import { createNamespacedHelpers } from 'vuex'
+import { createNamespacedHelpers, mapGetters as rootGetters } from 'vuex'
 const STORE_NAME = 'Play'
-const { mapActions } = createNamespacedHelpers(`${STORE_NAME}/`)
+// const { mapActions } = createNamespacedHelpers(`${STORE_NAME}/`)
+const { mapGetters: favoGetters } = createNamespacedHelpers('Favo/')
 
 export default {
     name: 'Playing',
@@ -51,22 +52,34 @@ export default {
         this.$root.$emit('remove-store', [STORE_NAME])
     },
     computed: {
+        ...rootGetters([
+            'getUserPlay'
+        ]),
+        ...favoGetters([
+            'getFavoListAll'
+        ]),
         getVideoMeta () {
-            const { id } = this.$route.query
-            console.log(id)
+            const { id, title, description } = this.getUserPlay
+            const fromFavo = this.getFavoListAll[0]
 
             if (id) {
-            // 有ID
-
-                // TODO:先從store撈資料, 若無再從forge撈資料
-
-            } else {
+                return {
+                    title,
+                    description
+                }
+            } else if (fromFavo) {
                 // 無ID, 直接取收藏頁第一筆撥放
+                return {
+                    title: fromFavo.title,
+                    description: fromFavo.description
+                }
             }
-
+            // 資料不存在,回大廳
+            alert('The video has not found!')
+            this.$router.replace({ name: 'Hall' })
             return {
-                title: 'ABC',
-                description: '123456'
+                title: '',
+                description: ''
             }
         }
     }
