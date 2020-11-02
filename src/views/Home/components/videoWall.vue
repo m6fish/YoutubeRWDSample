@@ -126,7 +126,7 @@ export default {
          */
         goPlaying (videoData) {
             this.SET_USER_PLAY(videoData)
-            this.$router.push({ name: 'Playing', query: { id: videoData.id } })
+            this.$router.push({ name: 'Playing' })
         }
     }
 }
