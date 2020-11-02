@@ -1,9 +1,20 @@
 <template>
   <div class="desc">
       <div class="title">{{getVideoMeta.title}}</div>
-      <div class="des">{{getVideoMeta.description}}</div>
+      <div class="des">{{getVideoMeta.description}}...</div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.desc {
+
+    .title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        padding: 10px 0;
+    }
+}
+</style>
 
 <script>
 import { createNamespacedHelpers, mapGetters as rootGetters } from 'vuex'
