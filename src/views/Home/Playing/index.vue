@@ -1,12 +1,21 @@
 <template>
   <div class="playing">
-        <video-player :options="videoOptions"/>
+        <video-player />
         <description />
   </div>
 </template>
 
 <style lang="scss">
 
+.playing {
+    padding: 0 10%;
+    @media screen and (max-width: 980px) {
+        padding: 0 5%;
+    }
+    @media screen and (max-width: 400px) {
+        padding: 10px;
+    }
+}
 </style>
 
 <script>
@@ -21,20 +30,6 @@ export default {
     components: {
         videoPlayer,
         description
-    },
-    data () {
-        return {
-            videoOptions: {
-                autoplay: 'muted',
-                controls: true,
-                sources: [{
-                    // 測試影片
-                    // src: 'http://demo.unified-streaming.com/video/tears-of-steel/tears-of-steel.ism/.m3u8',
-                    src: 'https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8',
-                    type: 'application/x-mpegURL'
-                }]
-            }
-        }
     },
     beforeCreate () {
         const storeArr = [
