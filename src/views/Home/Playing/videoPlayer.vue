@@ -2,11 +2,15 @@
     <div class="videoPlayer">
         <video ref="videoPlayer"
             class="video-js vjs-big-play-centered"
+            @pause="onPause"
+            @play="onPlay"
         />
     </div>
 </template>
 
 <script>
+import ad from './ad'
+
 export default {
     name: 'videoPlayer',
     data () {
@@ -25,16 +29,13 @@ export default {
                     type: 'application/x-mpegURL'
                 }]
             }
-
         }
     },
     created () {
         window.addEventListener('resize', this.handleResize, false)
     },
     mounted () {
-        this.player = this.$video(this.$refs.videoPlayer, this.videoOptions, () => {
-            console.log('onPlayerReady')
-        })
+        this.player = this.$video(this.$refs.videoPlayer, this.videoOptions, this.onReady)
         this.handleResize()
     },
     beforeDestroy () {
@@ -49,6 +50,7 @@ export default {
         }
     },
     methods: {
+        // 影片區大小縮放
         handleResize (e) {
             const maxWidth = 1368
             const videoWidth = this.$el.clientWidth
@@ -57,6 +59,23 @@ export default {
 
             this.player.width(newWidth)
             this.player.height(newHeight)
+        },
+        // 影片開始播放
+        onReady () {
+            console.log('onPlayerReady')
+        },
+        // 影片暫停
+        onPause () {
+            console.log('Pause')
+
+            this.$video.registerComponent('ad', ad)
+            this.player.addChild('ad', {
+                AD_ID: 100
+            })
+        },
+        // 影片播放
+        onPlay () {
+            console.log('Play')
         }
     }
 }
