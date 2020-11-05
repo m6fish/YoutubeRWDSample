@@ -15,6 +15,14 @@
     @media screen and (max-width: 400px) {
         padding: 10px;
     }
+
+    &.rotate{
+        -moz-transform:rotate(90deg);
+        -webkit-transform:rotate(90deg);
+        -o-transform:rotate(90deg);
+        -ms-transform:rotate(90deg);
+        transform:rotate(90deg);
+    }
 }
 </style>
 
