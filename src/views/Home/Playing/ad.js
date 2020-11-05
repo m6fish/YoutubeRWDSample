@@ -2,10 +2,9 @@ import Video from 'video.js'
 
 const component = Video.getComponent('component')
 
-export default class ad1 extends component {
+export default class ad extends component {
     constructor (player, options) {
         super(player, options)
-        console.log(options)
         this.addClass('vjs-ad_container')
     }
 
@@ -18,7 +17,6 @@ export default class ad1 extends component {
         <div class="vjs_con_title">簽下去!</div>
         <div class="vjs_con_content">戰艦世界</div>
         `
-        console.log('create:', AD_ID)
         return div
     }
 }

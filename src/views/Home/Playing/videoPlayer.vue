@@ -28,7 +28,11 @@ export default {
                     src: 'https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8',
                     type: 'application/x-mpegURL'
                 }]
-            }
+            },
+            adList: [100, 200], // 所有廣告ID
+            nowAD: null, // 當前播放的廣告ID
+            nowAD_DOM: null, // 當前的廣告dom,
+            isPause: false // 當前是否暫停
         }
     },
     created () {
@@ -66,16 +70,31 @@ export default {
         },
         // 影片暫停
         onPause () {
+            this.isPause = true
             console.log('Pause')
 
-            this.$video.registerComponent('ad', ad)
-            this.player.addChild('ad', {
-                AD_ID: 100
-            })
+            const AD_ID_FISRT = 100 // 首次廣告
+
+            if (!this.nowAD) {
+                this.$video.registerComponent('ad', ad)
+                this.player.addChild('ad', { AD_ID: AD_ID_FISRT })
+                this.nowAD = AD_ID_FISRT
+            } else {
+                // 已經註冊過廣告窗,則重新顯示
+                this.nowAD_DOM.removeClass('vjs-ad-hide')
+            }
         },
         // 影片播放
         onPlay () {
+            this.isPause = false
             console.log('Play')
+
+            // 當前有廣告,則隱藏
+            if (this.nowAD) {
+                this.nowAD_DOM = this.player.getChild('ad')
+                console.log(this.nowAD_DOM)
+                this.nowAD_DOM.addClass('vjs-ad-hide')
+            }
         }
     }
 }
