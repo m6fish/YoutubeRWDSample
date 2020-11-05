@@ -32,7 +32,8 @@ export default {
             adList: [100, 200], // 所有廣告ID
             nowAD: null, // 當前播放的廣告ID
             nowAD_DOM: null, // 當前的廣告dom,
-            isPause: false // 當前是否暫停
+            isPause: false, // 當前是否暫停
+            AD_ID_FISRT: 100 // 首次廣告id
         }
     },
     created () {
@@ -73,15 +74,16 @@ export default {
             this.isPause = true
             console.log('Pause')
 
-            const AD_ID_FISRT = 100 // 首次廣告
-
             if (!this.nowAD) {
                 this.$video.registerComponent('ad', ad)
-                this.player.addChild('ad', { AD_ID: AD_ID_FISRT })
-                this.nowAD = AD_ID_FISRT
+                this.player.addChild('ad', { AD_ID: this.AD_ID_FISRT })
+                this.nowAD = this.AD_ID_FISRT
             } else {
                 // 已經註冊過廣告窗,則重新顯示
                 this.nowAD_DOM.removeClass('vjs-ad-hide')
+
+                // 更換廣告
+                this.nowAD_DOM.changeAD(200)
             }
         },
         // 影片播放

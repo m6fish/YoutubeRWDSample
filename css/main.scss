@@ -27,6 +27,12 @@ body {
         align-items: center;
         flex-grow: 1;
     }
+    .vjs_con_content {
+        cursor: pointer;
+        a {
+            color:wheat;
+        }
+    }
 
     &.vjs-ad-hide {
         display: none;
