@@ -1,5 +1,5 @@
 <template>
-    <div class="side">
+    <div class="side" :class="{'side-active': getMenuActive}">
         <ul class="routes" v-for="(group, gID) in getMenu" :key="`G-${gID}`">
             <li class="r_item" v-for="(oneMenu, mID) in group.children" :key="mID">
                 <router-link :to="oneMenu.name" :class="{active: getRouteName === oneMenu.name}">
@@ -53,12 +53,8 @@ $itemActiveColor: #f00;
                 }
             }
 
-            a:hover {
+            a:hover, .active {
                 color:$itemActiveColor;
-            }
-
-            .active {
-                color: $itemActiveColor;
             }
 
             &+li {
@@ -66,17 +62,23 @@ $itemActiveColor: #f00;
             }
         }
     }
-}
-.side:hover {
-    width: 250px;
+
+    &:hover, &.side-active {
+        width: 250px;
+    }
 }
 
 </style>
 
 <script>
+import { mapGetters as rootGetters } from 'vuex'
+
 export default {
     name: 'Side',
     computed: {
+        ...rootGetters([
+            'getMenuActive'
+        ]),
         /**
          * 取得階層菜單項目
          * @return {Array} 菜單route陣列
