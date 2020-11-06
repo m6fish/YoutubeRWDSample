@@ -13,7 +13,7 @@
         width: 60px;
         height: 60px;
         background: #ffee93;
-        z-index: 3100;
+        z-index: 4100;
         cursor: pointer;
 
         &:hover, &.active {

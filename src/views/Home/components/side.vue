@@ -24,7 +24,7 @@ $itemActiveColor: #f00;
     transition: 0.5s;
     overflow: hidden;
     padding-top: 20px;
-    z-index: 3500;
+    z-index: 3100;
 
     ul {
         position: absolute;
@@ -65,6 +65,14 @@ $itemActiveColor: #f00;
 
     &:hover, &.side-active {
         width: 250px;
+    }
+
+    @media screen and (max-width: 767px){
+        left: -60px;
+        &.side-active {
+            left:0px;
+            width: 100%;
+        }
     }
 }
 

@@ -14,6 +14,10 @@
     height: 100vh;
     margin-left: 60px; // sidebar
     background-color: #F9F9F9;
+
+    @media screen and (max-width: 767px){
+        margin-left:0;
+    }
 }
 
 </style>
