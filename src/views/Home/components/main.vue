@@ -9,6 +9,7 @@
 <style lang="scss" scoped>
     .main {
         padding-top:60px;
+        background-color: #F9F9F9;
     }
 </style>
 
