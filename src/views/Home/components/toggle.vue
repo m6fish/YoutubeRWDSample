@@ -1,7 +1,5 @@
 <template>
     <div class="toggle" @click="toggleClick" :class="{active: getMenuActive}">
-        <span v-if="!getMenuActive">=</span>
-        <span v-else>X</span>
     </div>
 </template>
 
@@ -23,6 +21,38 @@ $toggleInactive: #eaeaea;
         &:hover, &.active {
             background: $toggleActive;
         }
+
+        &::before, &::after{
+            content: '';
+            display: block;
+            position: absolute;
+            border-radius: 3px;
+            height: 2px;
+            width: 25px;
+            background: black;
+            transition: all 0.5s ease-in-out;
+        }
+        &::before {
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        &::after {
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        &.active {
+            &::before{
+                top: 50%;
+                transform: translate(-50%,-50%) rotate(135deg);
+            }
+            &::after {
+                top: 50%;
+                transform: translate(-50%,-50%) rotate(45deg);
+            }
+        }
+
     }
 
 </style>
