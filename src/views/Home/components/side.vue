@@ -13,8 +13,10 @@
 
 <style lang="scss" scoped>
 
-$itemHeight: 32px;
+$iconHeight: 32px;
+$liHeight: 60px;
 $itemActiveColor: #f00;
+$itemActiveBGColor: #484a47;
 
 .side {
     position: fixed;
@@ -23,28 +25,28 @@ $itemActiveColor: #f00;
     background-color: wheat;
     transition: 0.5s;
     overflow: hidden;
-    padding-top: 20px;
     z-index: 3100;
 
     ul {
         position: absolute;
         width: 100%;
-        left: 10px;
+        left: 0;
         padding: 0;
         li {
             list-style: none;
 
             a {
+                padding-left: 10px;
                 color: #606060;
-                height: $itemHeight;
-                line-height: $itemHeight;
+                height: $liHeight;
+                line-height: $liHeight;
                 display:flex;
                 align-items: center;
 
                 i {
-                    width: $itemHeight;
+                    width: $iconHeight;
                     margin: 0 4px;
-                    font-size: $itemHeight;
+                    font-size: $iconHeight;
                 }
                 span {
                     margin-left: 10px;
@@ -55,10 +57,11 @@ $itemActiveColor: #f00;
 
             a:hover, .active {
                 color:$itemActiveColor;
+                background: $itemActiveBGColor;
             }
 
             &+li {
-                margin-top: 20px;
+                // margin-top: 20px;
             }
         }
     }

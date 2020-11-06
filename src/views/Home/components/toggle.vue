@@ -6,18 +6,22 @@
 </template>
 
 <style lang="scss" scoped>
+
+$toggleActive: #9a8f97;
+$toggleInactive: #eaeaea;
+
     .toggle {
-        position: absolute;
+        position: fixed;
         top: 0;
         right: 0;
         width: 60px;
         height: 60px;
-        background: #ffee93;
+        background: $toggleInactive;
         z-index: 4100;
         cursor: pointer;
 
         &:hover, &.active {
-            background: #ffc09f;
+            background: $toggleActive;
         }
     }
 
