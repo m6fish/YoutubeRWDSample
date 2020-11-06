@@ -1,7 +1,8 @@
 import Axios from 'axios'
 
 const state = {
-    userPlay: {} // 使用者點擊播放的的影片資訊
+    userPlay: {}, // 使用者點擊播放的的影片資訊
+    menuActive: false // 是否開啟側邊選單
 }
 
 const actions = {
@@ -20,6 +21,10 @@ const actions = {
     // 設定使用者點擊播放的影片資訊
     SET_USER_PLAY ({ commit }, payload) {
         commit(_M.SET_ROOT_DATA, { name: 'userPlay', data: payload })
+    },
+    // 設定側邊選單
+    SET_MENU_ACTIVE ({ commit }, payload) {
+        commit(_M.SET_ROOT_DATA, { name: 'menuActive', data: !!payload })
     }
 }
 
@@ -30,7 +35,8 @@ const mutations = {
 }
 
 const getters = {
-    getUserPlay: state => state.userPlay
+    getUserPlay: state => state.userPlay,
+    getMenuActive: state => state.menuActive
 }
 
 export default {

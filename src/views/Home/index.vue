@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <Side/>
+    <Toggle/>
     <div class="main-right">
         <Header/>
         <Main/>
@@ -21,13 +22,15 @@
 import Header from './components/header'
 import Main from './components/main'
 import Side from './components/side'
+import Toggle from './components/toggle'
 
 export default {
     name: 'Home',
     components: {
         Header,
         Main,
-        Side
+        Side,
+        Toggle
     }
 }
 </script>
