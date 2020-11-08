@@ -7,6 +7,7 @@ const resolve = dir => {
 
 module.exports = {
     lintOnSave: true,
+    publicPath: '/YoutubeRWDSample/',
     configureWebpack: {
         plugins: [
             new webpack.ProvidePlugin({
