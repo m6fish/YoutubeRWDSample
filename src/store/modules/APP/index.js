@@ -2,7 +2,8 @@ import Axios from 'axios'
 
 const state = {
     userPlay: {}, // 使用者點擊播放的的影片資訊
-    menuActive: false // 是否開啟側邊選單
+    menuActive: false, // 是否開啟側邊選單
+    API_KEY: '' // youTube API key
 }
 
 const actions = {
@@ -25,6 +26,10 @@ const actions = {
     // 設定側邊選單
     SET_MENU_ACTIVE ({ commit }, payload) {
         commit(_M.SET_ROOT_DATA, { name: 'menuActive', data: !!payload })
+    },
+    // 設定API key
+    SET_API_KEY ({ commit }, payload) {
+        commit(_M.SET_ROOT_DATA, { name: 'API_KEY', data: payload })
     }
 }
 
@@ -36,7 +41,8 @@ const mutations = {
 
 const getters = {
     getUserPlay: state => state.userPlay,
-    getMenuActive: state => state.menuActive
+    getMenuActive: state => state.menuActive,
+    getKey: state => state.API_KEY
 }
 
 export default {

@@ -1,6 +1,7 @@
 <template>
     <div class="hall">
-        <template v-if="getAllVideo.length">
+        <keySetting v-if="!getKey"/>
+        <template v-else-if="getAllVideo.length">
             <videoWall/>
             <pageNum/>
         </template>
@@ -12,9 +13,10 @@
 
 import videoWall from './videoWall'
 import pageNum from './pageNum'
+import keySetting from './keySetting'
 import Hall from '@S/Hall'
 import Favo from '@S/Favorites'
-import { createNamespacedHelpers } from 'vuex'
+import { createNamespacedHelpers, mapGetters as rootGetters } from 'vuex'
 const STORE_NAME = 'Hall'
 const { mapGetters, mapActions } = createNamespacedHelpers(`${STORE_NAME}/`)
 const { mapActions: favoActions } = createNamespacedHelpers('Favo/')
@@ -23,7 +25,8 @@ export default {
     name: 'Hall',
     components: {
         videoWall,
-        pageNum
+        pageNum,
+        keySetting
     },
     beforeCreate () {
         const storeArr = [
@@ -40,6 +43,9 @@ export default {
         this.$root.$emit('remove-store', [STORE_NAME])
     },
     computed: {
+        ...rootGetters([
+            'getKey'
+        ]),
         ...mapGetters([
             'getAllVideo'
         ])
