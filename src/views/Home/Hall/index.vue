@@ -1,8 +1,11 @@
 <template>
-  <div class="hall">
-      <videoWall/>
-      <pageNum/>
-  </div>
+    <div class="hall">
+        <template v-if="getAllVideo.length">
+            <videoWall/>
+            <pageNum/>
+        </template>
+        <div v-else class="empty">It's empty.</div>
+    </div>
 </template>
 
 <script>
@@ -13,7 +16,7 @@ import Hall from '@S/Hall'
 import Favo from '@S/Favorites'
 import { createNamespacedHelpers } from 'vuex'
 const STORE_NAME = 'Hall'
-const { mapActions } = createNamespacedHelpers(`${STORE_NAME}/`)
+const { mapGetters, mapActions } = createNamespacedHelpers(`${STORE_NAME}/`)
 const { mapActions: favoActions } = createNamespacedHelpers('Favo/')
 
 export default {
@@ -35,7 +38,11 @@ export default {
     },
     beforeDestroy () {
         this.$root.$emit('remove-store', [STORE_NAME])
-        // TODO: RESET data
+    },
+    computed: {
+        ...mapGetters([
+            'getAllVideo'
+        ])
     },
     methods: {
         ...mapActions([
