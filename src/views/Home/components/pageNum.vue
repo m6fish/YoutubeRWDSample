@@ -54,44 +54,41 @@ export default {
     name: 'pageNum',
     data () {
         return {
-            NUM_PER_PAGE: 5, // 頁面上至多放幾個數字頁碼
-            centerPage: 3, // 中央頁碼
-            currentPageArr: [] // 當前的頁碼陣列
+            NUM_PER_PAGE: 5, // 頁面上至多放幾個數字頁碼(奇數)
+            centerPage: 3 // 中央頁碼
+        }
+    },
+    watch: {
+        // 頁碼變動時, 調整中央頁碼
+        getPage (newPage) {
+            // 頁碼初始化, 檢查最大頁數是否不足
+            if (this.getMaxPage <= this.NUM_PER_PAGE) {
+                return false
+            }
+
+            const HALF = ~~(this.NUM_PER_PAGE / 2)
+            if (+newPage <= HALF) {
+                // 中央頁碼初值
+                this.centerPage = HALF + 1
+            } else if (+newPage > HALF && newPage <= (this.getMaxPage - HALF)) {
+                this.centerPage = +newPage
+            } else {
+                // 中央頁碼最大值
+                this.centerPage = this.getMaxPage - HALF
+            }
         }
     },
     computed: {
         /**
-         * 根據當前頁數產生頁面上顯示的數字頁碼(ex: page=1 -> [1,2,3,4,5])
+         * 根據中央頁碼產生顯示(ex: page=1 -> [1,2,3,4,5])
          * @returns {Array} 頁面上顯示的數字頁碼
          */
         getPageArr () {
-            // 頁碼初始化, 檢查最大頁數是否不足
-            if (this.getPage === 1 || this.getMaxPage <= this.NUM_PER_PAGE) {
-                const pages = this.getMaxPage > this.NUM_PER_PAGE ? this.NUM_PER_PAGE : this.getMaxPage
-                const newArr = [...Array(pages)].map((v, idx) => idx + 1)
-                this.currentPageArr = newArr
-                return newArr
+            // 頁數很少, 不滿一組
+            if (this.getMaxPage <= this.NUM_PER_PAGE) {
+                return [...Array(this.getMaxPage)].map((v, idx) => idx + 1)
             }
-
-            const shift = this.getPage - this.centerPage
-            const oldArr = this.currentPageArr.slice(0)
-            let newArr = oldArr.slice(0)
-            if (shift > 0) {
-                // 往後
-                const newLastPage = oldArr[this.NUM_PER_PAGE - 1] + shift
-                newArr = newLastPage > this.getMaxPage ? oldArr : oldArr.map(old => old + shift)
-                // set new centerPage
-                this.centerPage += shift
-            } else if (shift < 0) {
-                // 往前
-                const newFirstPage = oldArr[0] + shift
-                newArr = newFirstPage < 1 ? oldArr : oldArr.map(old => old + shift)
-                // set new centerPage
-                this.centerPage += shift
-            }
-
-            this.currentPageArr = newArr
-            return newArr
+            return [this.centerPage - 2, this.centerPage - 1, this.centerPage, this.centerPage + 1, this.centerPage + 2]
         }
     },
     methods: {
