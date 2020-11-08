@@ -9,54 +9,71 @@ const state = {
     nextPageToken: '' // 查詢下頁token
 }
 
-const actions = {
+// 把API回傳影片資料格式化成顯示用資料
+const formatData = (items) => {
+    const STR_LESS = 100
+    return items.map(({ id = '', contentDetails, snippet }) => {
+        // 取得本地語言標題
+        const { description = '', title = '' } = snippet.localized
+        // 取得圖片
+        const { medium } = snippet.thumbnails
+        // 取得影片時間
+        const { duration: durationOri } = contentDetails
+        return {
+            id,
+            title,
+            description: description.length > STR_LESS ? description.substr(0, STR_LESS) : description,
+            pic: medium.url || '',
+            duration: convertTime(durationOri)
+        }
+    })
+}
 
-    // 取得youtube影片清單
-    async fetchVideoList ({ commit, dispatch }, payload) {
+const actions = {
+    /**
+     * 打影片API取得結果
+     * @param {Int} payload.mode {1: 取得第一批, 2: 取得下一批}
+     */
+    async fetchVideo ({ commit, dispatch }, payload) {
+        const { mode } = payload
         const VIDEO_KEY = process.env.VUE_APP_VIDEO_KEY
         const url = 'https://www.googleapis.com/youtube/v3/videos'
-        const data = {
-            params: {
-                part: 'snippet,contentDetails',
-                key: VIDEO_KEY,
-                chart: 'mostPopular',
-                hl: 'zh-TW',
-                regionCode: 'TW',
-                maxResults: 50
-            }
+        const params = {
+            part: 'snippet,contentDetails',
+            key: VIDEO_KEY,
+            chart: 'mostPopular',
+            hl: 'zh-TW',
+            regionCode: 'TW',
+            maxResults: 50
+        }
+        if (+mode === 2) {
+            params.pageToken = state.nextPageToken
         }
 
-        const res = await Axios.get(url, data).catch(err => { console.warn('ERR!', err) })
-        const { status: returnState, data: returnData } = res || {}
+        const res = await Axios.get(url, { params }).catch(err => { console.warn('ERR!', err) })
+        const { status: returnState } = res || {}
 
         if (+returnState !== 200) {
             return false
         }
+        return res
+    },
 
-        const { nextPageToken, items } = returnData
+    // 取得youtube影片清單
+    async fetchVideoList ({ commit, dispatch }, payload) {
+        const res = await dispatch('fetchVideo', { mode: 1 })
+        if (!res) {
+            return false
+        }
+
+        const { nextPageToken, items } = res.data
 
         // 紀錄token
         commit(_M.SET_DATA, { name: 'nextPageToken', data: nextPageToken })
 
-        // 格式化資料&紀錄
-        const STR_LESS = 100
-        const formatData = items.map(({ id = '', contentDetails, snippet }) => {
-            // 取得本地語言標題
-            const { description = '', title = '' } = snippet.localized
-            // 取得圖片
-            const { medium } = snippet.thumbnails
-            // 取得影片時間
-            const { duration: durationOri } = contentDetails
-            return {
-                id,
-                title,
-                description: description.length > STR_LESS ? description.substr(0, STR_LESS) : description,
-                pic: medium.url || '',
-                duration: convertTime(durationOri)
-            }
-        })
         // 設定allVideo & 頁碼
-        commit(_M.SET_DATA, { name: 'allVideo', data: formatData })
+        const theFormatData = formatData(items)
+        commit(_M.SET_DATA, { name: 'allVideo', data: theFormatData })
         dispatch('calcPage')
     },
     // 取得下一批資料
@@ -67,52 +84,18 @@ const actions = {
             return false
         }
 
-        const VIDEO_KEY = process.env.VUE_APP_VIDEO_KEY
-        const url = 'https://www.googleapis.com/youtube/v3/videos'
-        const data = {
-            params: {
-                part: 'snippet,contentDetails',
-                key: VIDEO_KEY,
-                chart: 'mostPopular',
-                hl: 'zh-TW',
-                regionCode: 'TW',
-                maxResults: 50,
-                pageToken: state.nextPageToken
-            }
-        }
-
-        const res = await Axios.get(url, data).catch(err => { console.warn('ERR!', err) })
-        const { status: returnState, data: returnData } = res || {}
-
-        if (+returnState !== 200) {
+        const res = await dispatch('fetchVideo', { mode: 2 })
+        if (!res) {
             return false
         }
-
-        const { nextPageToken, items } = returnData
+        const { nextPageToken, items } = res.data
 
         // 紀錄token
         commit(_M.SET_DATA, { name: 'nextPageToken', data: nextPageToken || '' })
 
-        // 格式化資料&紀錄
-        const STR_LESS = 100
-        const formatData = items.map(({ id = '', contentDetails, snippet }) => {
-            // 取得本地語言標題
-            const { description = '', title = '' } = snippet.localized
-            // 取得圖片
-            const { medium } = snippet.thumbnails
-            // 取得影片時間
-            const { duration: durationOri } = contentDetails
-            return {
-                id,
-                title,
-                description: description.length > STR_LESS ? description.substr(0, STR_LESS) : description,
-                pic: medium.url || '',
-                duration: convertTime(durationOri)
-            }
-        })
-
         // 設定allVideo & 頁碼
-        commit(_M.SET_DATA, { name: 'allVideo', data: [...state.allVideo, ...formatData] })
+        const theFormatData = formatData(items)
+        commit(_M.SET_DATA, { name: 'allVideo', data: [...state.allVideo, ...theFormatData] })
         dispatch('calcPage')
     },
     // 計算與設定總頁數
