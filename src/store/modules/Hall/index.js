@@ -110,8 +110,13 @@ const actions = {
         commit(_M.SET_DATA, { name: 'maxPage', data: maxPage })
     },
     // 設定頁碼
-    setPageNum ({ commit }, payload) {
+    setPageNum ({ commit, dispatch, getters }, payload) {
         commit(_M.SET_DATA, { name: 'page', data: +payload })
+
+        // 到底線前一筆時,向後要新資料
+        if (+payload >= getters.getMaxPage - 1) {
+            dispatch('fetchNextVideo')
+        }
     }
 }
 
