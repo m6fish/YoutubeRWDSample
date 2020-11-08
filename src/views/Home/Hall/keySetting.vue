@@ -1,6 +1,6 @@
 <template>
     <div class="key-setting">
-        <input v-model='key' type="text">
+        <input v-model='key' type="text" placeholder="Your Youtube API Key">
         <div class="savebtn" @click="saveKey">SAVE</div>
     </div>
 </template>
@@ -33,7 +33,10 @@
 </style>
 
 <script>
-import { mapActions as rootActions } from 'vuex'
+import { createNamespacedHelpers, mapActions as rootActions } from 'vuex'
+const STORE_NAME = 'Hall'
+const { mapActions } = createNamespacedHelpers(`${STORE_NAME}/`)
+
 export default {
     name: 'KeySetting',
     data () {
@@ -45,8 +48,12 @@ export default {
         ...rootActions([
             'SET_API_KEY'
         ]),
+        ...mapActions([
+            'fetchVideoList'
+        ]),
         saveKey () {
             this.SET_API_KEY(this.key)
+            this.fetchVideoList('get')
         }
     }
 }

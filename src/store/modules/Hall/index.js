@@ -34,9 +34,14 @@ const actions = {
      * 打影片API取得結果
      * @param {Int} payload.mode {1: 取得第一批, 2: 取得下一批}
      */
-    async fetchVideo ({ commit, dispatch }, payload) {
+    async fetchVideo ({ commit, dispatch, rootGetters }, payload) {
+        // 沒有KEY
+        if (!rootGetters.getKey) {
+            return false
+        }
+
         const { mode } = payload
-        const VIDEO_KEY = process.env.VUE_APP_VIDEO_KEY
+        const VIDEO_KEY = rootGetters.getKey
         const url = 'https://www.googleapis.com/youtube/v3/videos'
         const params = {
             part: 'snippet,contentDetails',

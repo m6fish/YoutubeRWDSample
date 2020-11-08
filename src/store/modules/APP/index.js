@@ -3,7 +3,7 @@ import Axios from 'axios'
 const state = {
     userPlay: {}, // 使用者點擊播放的的影片資訊
     menuActive: false, // 是否開啟側邊選單
-    API_KEY: '' // youTube API key
+    API_KEY: process.env.VUE_APP_VIDEO_KEY || '' // youTube API key
 }
 
 const actions = {
