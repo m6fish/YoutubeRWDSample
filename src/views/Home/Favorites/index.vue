@@ -4,7 +4,7 @@
             <videoWall/>
             <pageNum/>
         </template>
-        <div else class="empty">It's empty.</div>
+        <div v-else class="empty">It's empty.</div>
     </div>
 </template>
 
